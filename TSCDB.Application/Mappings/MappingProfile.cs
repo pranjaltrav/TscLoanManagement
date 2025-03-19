@@ -1,0 +1,37 @@
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+using TscLoanManagement.TSCDB.Application.DTOs;
+using TscLoanManagement.TSCDB.Core.Domain.Authentication;
+using TscLoanManagement.TSCDB.Core.Domain.Dealer;
+using TscLoanManagement.TSCDB.Core.Domain.Loan;
+using AutoMapper;
+
+namespace TscLoanManagement.TSCDB.Application.Mappings
+{
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            // User Mappings
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
+
+            // Dealer Mappings
+            CreateMap<Dealer, DealerDto>();
+            CreateMap<DealerDto, Dealer>();
+
+            // Loan Mappings
+            CreateMap<Loan, LoanDto>()
+                .ForMember(dest => dest.DealerName, opt => opt.MapFrom(src => src.Dealer.Name))
+                .ForMember(dest => dest.Attachments, opt => opt.MapFrom(src => src.Attachments.Select(a => a.FilePath)));
+            CreateMap<LoanDto, Loan>();
+
+            // VehicleInfo Mappings
+            CreateMap<VehicleInfo, VehicleInfoDto>();
+            CreateMap<VehicleInfoDto, VehicleInfo>();
+
+            // BuyerInfo Mappings
+            CreateMap<BuyerInfo, BuyerInfoDto>();
+            CreateMap<BuyerInfoDto, BuyerInfo>();
+        }
+    }
+}
