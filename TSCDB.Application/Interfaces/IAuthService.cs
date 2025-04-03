@@ -4,8 +4,8 @@ namespace TscLoanManagement.TSCDB.Application.Interfaces
 {
     public interface IAuthService
     {
-        Task<TokenResponseDto> LoginAsync(LoginRequestDto request);
-        Task<bool> SendOtpAsync(OtpRequestDto request);
-        Task<TokenResponseDto> VerifyOtpAsync(OtpVerificationDto request);
+        Task<UserDto> LoginAsync(LoginRequestDto request);
+        //Task<bool> SendOtpAsync(OtpRequestDto request);
+        //Task<TokenResponseDto> VerifyOtpAsync(OtpVerificationDto request);
     }
 }

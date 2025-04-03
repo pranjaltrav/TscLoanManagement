@@ -16,12 +16,12 @@ namespace TscLoanManagement.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<TokenResponseDto>> Login(LoginRequestDto request)
+        public async Task<ActionResult<UserDto>> Login(LoginRequestDto request)
         {
             try
             {
-                var response = await _authService.LoginAsync(request);
-                return Ok(response);
+                var user = await _authService.LoginAsync(request);
+                return Ok(user);
             }
             catch (ApplicationException ex)
             {
@@ -29,32 +29,32 @@ namespace TscLoanManagement.Controllers
             }
         }
 
-        [HttpPost("send-otp")]
-        public async Task<ActionResult> SendOtp(OtpRequestDto request)
-        {
-            try
-            {
-                var result = await _authService.SendOtpAsync(request);
-                return Ok(new { success = result });
-            }
-            catch (ApplicationException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
+        //[HttpPost("send-otp")]
+        //public async Task<ActionResult> SendOtp(OtpRequestDto request)
+        //{
+        //    try
+        //    {
+        //        var result = await _authService.SendOtpAsync(request);
+        //        return Ok(new { success = result });
+        //    }
+        //    catch (ApplicationException ex)
+        //    {
+        //        return BadRequest(new { message = ex.Message });
+        //    }
+        //}
 
-        [HttpPost("verify-otp")]
-        public async Task<ActionResult<TokenResponseDto>> VerifyOtp(OtpVerificationDto request)
-        {
-            try
-            {
-                var response = await _authService.VerifyOtpAsync(request);
-                return Ok(response);
-            }
-            catch (ApplicationException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
+        //[HttpPost("verify-otp")]
+        //public async Task<ActionResult<TokenResponseDto>> VerifyOtp(OtpVerificationDto request)
+        //{
+        //    try
+        //    {
+        //        var response = await _authService.VerifyOtpAsync(request);
+        //        return Ok(response);
+        //    }
+        //    catch (ApplicationException ex)
+        //    {
+        //        return BadRequest(new { message = ex.Message });
+        //    }
+        //}
     }
 }

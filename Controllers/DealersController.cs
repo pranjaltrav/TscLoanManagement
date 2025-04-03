@@ -36,7 +36,7 @@ namespace TscLoanManagement.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<DealerDto>> CreateDealer(DealerDto dealerDto)
         {
             var createdDealer = await _dealerService.CreateDealerAsync(dealerDto);
@@ -75,5 +75,28 @@ namespace TscLoanManagement.Controllers
                 return NotFound(new { message = ex.Message });
             }
         }
+
+        [HttpPost("register")]
+        [AllowAnonymous] // Allowing anonymous access for now
+        public async Task<ActionResult<DealerDto>> RegisterDealer([FromBody] DealerDto dealerDto)
+        {
+            if (dealerDto == null)
+            {
+                return BadRequest("Dealer data is required.");
+            }
+
+            var createdDealer = await _dealerService.CreateDealerAsync(dealerDto);
+            return CreatedAtAction(nameof(GetDealerById), new { id = createdDealer.Id }, createdDealer);
+        }
+
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<DealerDto>> GetDealerById(int id)
+        //{
+        //    var dealer = await _dealerService.GetDealerByIdAsync(id);
+        //    if (dealer == null)
+        //        return NotFound();
+
+        //    return Ok(dealer);
+        //}
     }
 }

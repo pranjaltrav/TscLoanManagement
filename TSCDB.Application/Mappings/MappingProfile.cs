@@ -16,8 +16,9 @@ namespace TscLoanManagement.TSCDB.Application.Mappings
             CreateMap<UserDto, User>();
 
             // Dealer Mappings
-            CreateMap<Dealer, DealerDto>();
-            CreateMap<DealerDto, Dealer>();
+            CreateMap<DealerDto, Dealer>()
+                        .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                        .ReverseMap();
 
             // Loan Mappings
             CreateMap<Loan, LoanDto>()
