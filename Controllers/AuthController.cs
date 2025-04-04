@@ -29,32 +29,18 @@ namespace TscLoanManagement.Controllers
             }
         }
 
-        //[HttpPost("send-otp")]
-        //public async Task<ActionResult> SendOtp(OtpRequestDto request)
-        //{
-        //    try
-        //    {
-        //        var result = await _authService.SendOtpAsync(request);
-        //        return Ok(new { success = result });
-        //    }
-        //    catch (ApplicationException ex)
-        //    {
-        //        return BadRequest(new { message = ex.Message });
-        //    }
-        //}
-
-        //[HttpPost("verify-otp")]
-        //public async Task<ActionResult<TokenResponseDto>> VerifyOtp(OtpVerificationDto request)
-        //{
-        //    try
-        //    {
-        //        var response = await _authService.VerifyOtpAsync(request);
-        //        return Ok(response);
-        //    }
-        //    catch (ApplicationException ex)
-        //    {
-        //        return BadRequest(new { message = ex.Message });
-        //    }
-        //}
+        [HttpPost("register")]
+        public async Task<ActionResult<UserDto>> Register(RegisterRequestDto request)
+        {
+            try
+            {
+                var user = await _authService.RegisterAsync(request);
+                return CreatedAtAction(nameof(Login), new { username = user.Username }, user);
+            }
+            catch (ApplicationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace TscLoanManagement.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<DealerDto>>> GetAllDealers()
         {
             var dealers = await _dealerService.GetAllDealersAsync();

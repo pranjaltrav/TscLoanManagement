@@ -14,6 +14,8 @@ namespace TscLoanManagement.TSCDB.Application.Mappings
             // User Mappings
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+            CreateMap<RegisterRequestDto, User>();
+
 
             // Dealer Mappings
             CreateMap<DealerDto, Dealer>()

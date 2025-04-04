@@ -16,14 +16,19 @@ namespace TscLoanManagement.TSCDB.Infrastructure.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
-        {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-        }
+        //public async Task<User> GetUserByEmailAsync(string email)
+        //{
+        //    return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        //}
 
-        public async Task<User> GetUserByPhoneNumberAsync(string phoneNumber)
+        //public async Task<User> GetUserByPhoneNumberAsync(string phoneNumber)
+        //{
+        //    return await _context.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
+        //}
+
+        public async Task<int> SaveChangesAsync()
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
+            return await _context.SaveChangesAsync();
         }
     }
 }
