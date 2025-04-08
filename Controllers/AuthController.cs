@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TscLoanManagement.TSCDB.Application.DTOs;
 using TscLoanManagement.TSCDB.Application.Interfaces;
 
@@ -42,5 +43,21 @@ namespace TscLoanManagement.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpPost("add-representative")]
+        //[Authorize(Roles = "Admin")] // make sure role-based auth is in place
+        public async Task<ActionResult<UserDto>> AddRepresentative(CreateRepresentativeDto request)
+        {
+            try
+            {
+                var user = await _authService.CreateRepresentativeAsync(request);
+                return CreatedAtAction(nameof(Login), new { username = user.Username }, user);
+            }
+            catch (ApplicationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }

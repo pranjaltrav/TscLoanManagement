@@ -43,6 +43,7 @@ namespace TscLoanManagement.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<LoanDto>> CreateLoan(LoanDto loanDto)
         {
             var createdLoan = await _loanService.CreateLoanAsync(loanDto);

@@ -6,5 +6,7 @@ namespace TscLoanManagement.TSCDB.Application.Interfaces
     {
         Task<UserDto> LoginAsync(LoginRequestDto request);
         Task<UserDto> RegisterAsync(RegisterRequestDto request);
+        Task<UserDto> CreateRepresentativeAsync(CreateRepresentativeDto request);
+
     }
 }

@@ -26,6 +26,7 @@ namespace TscLoanManagement.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<DealerDto>> GetDealerById(int id)
         {
             var dealer = await _dealerService.GetDealerByIdAsync(id);
@@ -44,7 +45,7 @@ namespace TscLoanManagement.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<ActionResult> UpdateDealer(int id, DealerDto dealerDto)
         {
             if (id != dealerDto.Id)
