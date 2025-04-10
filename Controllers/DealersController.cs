@@ -46,7 +46,7 @@ namespace TscLoanManagement.Controllers
 
         [HttpPut("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult> UpdateDealer(int id, DealerDto dealerDto)
+        public async Task<ActionResult> UpdateDealer(int id, [FromBody] DealerDto dealerDto)
         {
             if (id != dealerDto.Id)
                 return BadRequest();

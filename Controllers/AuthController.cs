@@ -59,5 +59,56 @@ namespace TscLoanManagement.Controllers
             }
         }
 
+        [HttpGet("representatives")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllRepresentatives()
+        {
+            var reps = await _authService.GetAllRepresentativesAsync();
+            return Ok(reps);
+        }
+
+        [HttpGet("representatives/{id}")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<ActionResult<UserDto>> GetRepresentativeById(int id)
+        {
+            try
+            {
+                var rep = await _authService.GetRepresentativeByIdAsync(id);
+                return Ok(rep);
+            }
+            catch (ApplicationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
+        [HttpPut("representatives/{id}")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<ActionResult<UserDto>> UpdateRepresentative(int id, UpdateRepresentativeDto request)
+        {
+            try
+            {
+                var updatedUser = await _authService.UpdateRepresentativeAsync(id, request);
+                return Ok(updatedUser);
+            }
+            catch (ApplicationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
+        [HttpDelete("representatives/{id}")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteRepresentative(int id)
+        {
+            var deleted = await _authService.DeleteRepresentativeAsync(id);
+            if (!deleted)
+            {
+                return NotFound(new { message = "Representative not found or already deleted" });
+            }
+
+            return NoContent();
+        }
+
     }
 }

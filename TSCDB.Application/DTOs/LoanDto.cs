@@ -16,6 +16,12 @@
         public DateTime CreatedDate { get; set; }
         public VehicleInfoDto VehicleInfo { get; set; }
         public BuyerInfoDto BuyerInfo { get; set; }
-        public List<string> Attachments { get; set; }
+        public List<LoanAttachmentDto>? Attachments { get; set; }
     }
+}
+
+public class LoanAttachmentDto
+{
+    public string FilePath { get; set; }
+    public string FileType { get; set; } // e.g., "pdf", "jpg", etc.
 }

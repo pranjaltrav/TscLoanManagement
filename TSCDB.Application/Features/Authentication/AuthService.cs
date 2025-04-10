@@ -73,8 +73,8 @@ namespace TscLoanManagement.TSCDB.Application.Features.Authentication
                 Username = request.Username,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
-                PasswordHash = request.Password, // Note: This is using the plain password as in original code
-                UserType = "Representative",
+                PasswordHash = request.Password,
+                UserType = "representative",
                 IsActive = true
             };
 
@@ -85,6 +85,50 @@ namespace TscLoanManagement.TSCDB.Application.Features.Authentication
             userDto.Token = _jwtService.GenerateToken(newUser);
 
             return userDto;
+        }
+
+        public async Task<IEnumerable<UserDto>> GetAllRepresentativesAsync()
+        {
+            var users = await _userRepository.GetAllAsync();
+            var reps = users.Where(u => u.UserType == "representative" && u.IsActive);
+            return _mapper.Map<IEnumerable<UserDto>>(reps);
+        }
+
+        public async Task<UserDto> GetRepresentativeByIdAsync(int id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null || user.UserType != "representative")
+                throw new ApplicationException("Representative not found");
+
+            return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task<UserDto> UpdateRepresentativeAsync(int id, UpdateRepresentativeDto request)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null || user.UserType != "representative")
+                throw new ApplicationException("Representative not found");
+
+            user.Email = request.Email;
+            user.PhoneNumber = request.PhoneNumber;
+            user.IsActive = request.IsActive;
+
+            await _userRepository.UpdateAsync(user);
+            await _userRepository.SaveChangesAsync();
+
+            return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task<bool> DeleteRepresentativeAsync(int id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null || user.UserType != "representative")
+                return false;
+
+            await _userRepository.DeleteAsync(user);
+            await _userRepository.SaveChangesAsync();
+
+            return true;
         }
 
     }

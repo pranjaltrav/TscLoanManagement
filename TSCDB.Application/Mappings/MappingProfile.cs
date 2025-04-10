@@ -23,10 +23,20 @@ namespace TscLoanManagement.TSCDB.Application.Mappings
                         .ReverseMap();
 
             // Loan Mappings
+            CreateMap<LoanDto, Loan>()
+                .ForMember(dest => dest.Attachments, opt => opt.Ignore())
+                .ForMember(dest => dest.Dealer, opt => opt.Ignore());
+
             CreateMap<Loan, LoanDto>()
                 .ForMember(dest => dest.DealerName, opt => opt.MapFrom(src => src.Dealer.Name))
-                .ForMember(dest => dest.Attachments, opt => opt.MapFrom(src => src.Attachments.Select(a => a.FilePath)));
-            CreateMap<LoanDto, Loan>();
+                .ForMember(dest => dest.Attachments, opt => opt.Ignore());
+
+
+
+            CreateMap<Loan, LoanDto>()
+                .ForMember(dest => dest.DealerName, opt => opt.MapFrom(src => src.Dealer.Name))
+                .ForMember(dest => dest.Attachments, opt => opt.MapFrom(src =>
+                    src.Attachments.Select(a => a.FilePath)));
 
             // VehicleInfo Mappings
             CreateMap<VehicleInfo, VehicleInfoDto>();
