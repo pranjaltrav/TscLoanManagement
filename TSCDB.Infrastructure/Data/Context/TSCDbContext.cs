@@ -24,8 +24,9 @@ namespace TscLoanManagement.TSCDB.Infrastructure.Data.Context
             // Configure entity relationships
             modelBuilder.Entity<Dealer>()
                 .HasOne(d => d.User)
-                .WithOne()
-                .HasForeignKey<Dealer>(d => d.UserId);
+                .WithMany(u => u.Dealers)
+                .HasForeignKey(d => d.UserId);
+
 
             modelBuilder.Entity<Loan>()
                 .HasOne(l => l.Dealer)

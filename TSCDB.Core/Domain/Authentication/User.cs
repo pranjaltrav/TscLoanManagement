@@ -11,5 +11,6 @@
         public DateTime CreatedDate { get; set; }
         public DateTime LastLoginDate { get; set; }
         public string UserType { get; set; }
+        public ICollection<TscLoanManagement.TSCDB.Core.Domain.Dealer.Dealer> Dealers { get; set; } = new List<TscLoanManagement.TSCDB.Core.Domain.Dealer.Dealer>();
     }
 }

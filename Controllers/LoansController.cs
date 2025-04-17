@@ -51,6 +51,7 @@ namespace TscLoanManagement.Controllers
         }
 
         [HttpPut("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult> UpdateLoan(int id, LoanDto loanDto)
         {
             if (id != loanDto.Id)

@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAllOrigins",
         builder =>
         {
-            builder.WithOrigins("http://localhost:5173") // Adjust frontend URL as needed
+            builder.WithOrigins("http://localhost:5173", "https://tscfinserv.traversia.net", "https://traverseb2b.traversia.net") // Adjust frontend URL as needed
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });
@@ -105,11 +105,15 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsProduction() || app.Environment.IsProduction()) // allow in all
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "TSCDB API V1");
+    });
 }
+
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAllOrigins");

@@ -35,4 +35,12 @@
     <Folder Include="TSCDB.Infrastructure\Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\AIO\source\repos\TscLoanManagement\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\AIO\source\repos\TscLoanManagement\.editorconfig" />
+  </ItemGroup>
+
 </Project>
