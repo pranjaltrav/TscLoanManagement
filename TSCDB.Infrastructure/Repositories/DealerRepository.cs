@@ -13,12 +13,18 @@ namespace TscLoanManagement.TSCDB.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<Dealer>> GetAllActiveDealersAsync()
         {
-            return await _context.Dealers.Where(d => d.IsActive).ToListAsync();
+            return await _context.Dealers
+                .Include(d => d.User)
+                .Where(d => d.IsActive)
+                .ToListAsync();
         }
+
 
         public async Task<Dealer> GetDealerByUserIdAsync(int userId)
         {
-            return await _context.Dealers.FirstOrDefaultAsync(d => d.UserId == userId);
+            return await _context.Dealers
+                .Include(d => d.User)
+                .FirstOrDefaultAsync(d => d.UserId == userId);
         }
     }
 }

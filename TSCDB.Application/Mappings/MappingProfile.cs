@@ -18,9 +18,7 @@ namespace TscLoanManagement.TSCDB.Application.Mappings
 
 
             // Dealer Mappings
-            CreateMap<DealerDto, Dealer>()
-                        .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
-                        .ReverseMap();
+            CreateMap<Dealer, DealerDto>().ReverseMap();
 
             // Loan Mappings
             CreateMap<LoanDto, Loan>()
@@ -28,13 +26,13 @@ namespace TscLoanManagement.TSCDB.Application.Mappings
                 .ForMember(dest => dest.Dealer, opt => opt.Ignore());
 
             CreateMap<Loan, LoanDto>()
-                .ForMember(dest => dest.DealerName, opt => opt.MapFrom(src => src.Dealer.Name))
+                .ForMember(dest => dest.DealerName, opt => opt.MapFrom(src => src.Dealer.DealershipName))
                 .ForMember(dest => dest.Attachments, opt => opt.Ignore());
 
 
 
             CreateMap<Loan, LoanDto>()
-                .ForMember(dest => dest.DealerName, opt => opt.MapFrom(src => src.Dealer.Name))
+                .ForMember(dest => dest.DealerName, opt => opt.MapFrom(src => src.Dealer.DealershipName))
                 .ForMember(dest => dest.Attachments, opt => opt.MapFrom(src =>
                     src.Attachments.Select(a => a.FilePath)));
 

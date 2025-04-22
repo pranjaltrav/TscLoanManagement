@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAllOrigins",
         builder =>
         {
-            builder.WithOrigins("http://localhost:5173", "https://tscfinserv.traversia.net", "https://traverseb2b.traversia.net") // Adjust frontend URL as needed
+            builder.WithOrigins("http://localhost:5173", "https://tscfinserv.traversia.net", "https://traverseb2b.traversia.net", "https://tscfadmin.traversia.net") // Adjust frontend URL as needed
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });
