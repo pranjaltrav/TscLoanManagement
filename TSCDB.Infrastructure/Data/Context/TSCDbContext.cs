@@ -27,6 +27,26 @@ namespace TscLoanManagement.TSCDB.Infrastructure.Data.Context
                 .WithMany(u => u.Dealers)
                 .HasForeignKey(d => d.UserId);
 
+            modelBuilder.Entity<Dealer>()
+                .HasMany(d => d.BorrowerDetails)
+                .WithOne(b => b.Dealer)
+                .HasForeignKey(b => b.DealerId);
+
+            modelBuilder.Entity<Dealer>()
+                .HasMany(d => d.GuarantorDetails)
+                .WithOne(g => g.Dealer)
+                .HasForeignKey(g => g.DealerId);
+
+            modelBuilder.Entity<Dealer>()
+                .HasMany(d => d.ChequeDetails)
+                .WithOne(c => c.Dealer)
+                .HasForeignKey(c => c.DealerId);
+
+            modelBuilder.Entity<Dealer>()
+                .HasMany(d => d.SecurityDepositDetails)
+                .WithOne(s => s.Dealer)
+                .HasForeignKey(s => s.DealerId);
+
 
             modelBuilder.Entity<Loan>()
                 .HasOne(l => l.Dealer)

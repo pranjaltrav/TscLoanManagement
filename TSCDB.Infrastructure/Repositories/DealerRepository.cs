@@ -20,11 +20,14 @@ namespace TscLoanManagement.TSCDB.Infrastructure.Repositories
         }
 
 
-        public async Task<Dealer> GetDealerByUserIdAsync(int userId)
+        public async Task<Dealer> GetDealerByUserIdAsync(int id)
         {
             return await _context.Dealers
-                .Include(d => d.User)
-                .FirstOrDefaultAsync(d => d.UserId == userId);
+                .Include(d => d.ChequeDetails)
+                .Include(d => d.BorrowerDetails)
+                .Include(d => d.GuarantorDetails)
+                .Include(d => d.SecurityDepositDetails)
+                .FirstOrDefaultAsync(d => d.Id == id);
         }
     }
 }

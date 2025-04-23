@@ -19,6 +19,19 @@ namespace TscLoanManagement.TSCDB.Application.Mappings
 
             // Dealer Mappings
             CreateMap<Dealer, DealerDto>().ReverseMap();
+            CreateMap<Dealer, DealerDto>()
+                .ForMember(dest => dest.ChequeDetails, opt => opt.MapFrom(src => src.ChequeDetails))
+                .ForMember(dest => dest.BorrowerDetails, opt => opt.MapFrom(src => src.BorrowerDetails))
+                .ForMember(dest => dest.GuarantorDetails, opt => opt.MapFrom(src => src.GuarantorDetails))
+                .ForMember(dest => dest.SecurityDepositDetails, opt => opt.MapFrom(src => src.SecurityDepositDetails));
+
+
+
+            CreateMap<BorrowerDetails, BorrowerDetailsDto>().ReverseMap();
+            CreateMap<GuarantorDetails, GuarantorDetailsDto>().ReverseMap();
+            CreateMap<ChequeDetails, ChequeDetailsDto>().ReverseMap();
+            CreateMap<SecurityDepositDetails, SecurityDepositDetailsDto>().ReverseMap();
+
 
             // Loan Mappings
             CreateMap<LoanDto, Loan>()

@@ -32,5 +32,11 @@ namespace TscLoanManagement.TSCDB.Core.Domain.Dealer
         public virtual User User { get; set; }
         public virtual ICollection<TscLoanManagement.TSCDB.Core.Domain.Loan.Loan> Loans { get; set; }
 
+        public ICollection<ChequeDetails> ChequeDetails { get; set; }
+        public ICollection<BorrowerDetails> BorrowerDetails { get; set; }
+        public ICollection<GuarantorDetails> GuarantorDetails { get; set; }
+        public ICollection<SecurityDepositDetails> SecurityDepositDetails { get; set; }
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TscLoanManagement.TSCDB.Application.DTOs;
 using TscLoanManagement.TSCDB.Application.Interfaces;
@@ -11,10 +12,12 @@ namespace TscLoanManagement.Controllers
     public class DealersController : ControllerBase
     {
         private readonly IDealerService _dealerService;
+        private readonly IMapper _mapper;
 
-        public DealersController(IDealerService dealerService)
+        public DealersController(IDealerService dealerService, IMapper mapper)
         {
             _dealerService = dealerService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -33,7 +36,8 @@ namespace TscLoanManagement.Controllers
             if (dealer == null)
                 return NotFound();
 
-            return Ok(dealer);
+                var dealerDto = _mapper.Map<DealerDto>(dealer);
+                return Ok(dealerDto);
         }
 
         [HttpPost]
@@ -89,15 +93,5 @@ namespace TscLoanManagement.Controllers
             var createdDealer = await _dealerService.CreateDealerAsync(dealerDto);
             return CreatedAtAction(nameof(GetDealerById), new { id = createdDealer.Id }, createdDealer);
         }
-
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<DealerDto>> GetDealerById(int id)
-        //{
-        //    var dealer = await _dealerService.GetDealerByIdAsync(id);
-        //    if (dealer == null)
-        //        return NotFound();
-
-        //    return Ok(dealer);
-        //}
     }
 }

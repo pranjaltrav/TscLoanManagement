@@ -25,7 +25,7 @@ namespace TscLoanManagement.TSCDB.Application.Features.Dealers
 
         public async Task<DealerDto> GetDealerByIdAsync(int id)
         {
-            var dealer = await _dealerRepository.GetByIdAsync(id);
+            var dealer = await _dealerRepository.GetDealerByUserIdAsync(id);
             return _mapper.Map<DealerDto>(dealer);
         }
 

@@ -29,5 +29,10 @@ namespace TscLoanManagement.TSCDB.Application.DTOs
 
         public bool IsActive { get; set; }
         public DateTime RegisteredDate { get; set; }
+
+        public List<ChequeDetailsDto> ChequeDetails { get; set; }
+        public List<BorrowerDetailsDto> BorrowerDetails { get; set; }
+        public List<GuarantorDetailsDto> GuarantorDetails { get; set; }
+        public List<SecurityDepositDetailsDto> SecurityDepositDetails { get; set; }
     }
 }
