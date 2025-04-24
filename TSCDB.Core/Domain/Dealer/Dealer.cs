@@ -37,6 +37,7 @@ namespace TscLoanManagement.TSCDB.Core.Domain.Dealer
         public ICollection<GuarantorDetails> GuarantorDetails { get; set; }
         public ICollection<SecurityDepositDetails> SecurityDepositDetails { get; set; }
 
+        public virtual ICollection<DocumentUpload> DocumentUploads { get; set; }
 
     }
 }

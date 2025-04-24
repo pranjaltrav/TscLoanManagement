@@ -47,6 +47,26 @@ namespace TscLoanManagement.TSCDB.Infrastructure.Data.Context
                 .WithOne(s => s.Dealer)
                 .HasForeignKey(s => s.DealerId);
 
+            modelBuilder.Entity<DocumentUpload>()
+                .HasOne(d => d.Dealer)
+                .WithMany(d => d.DocumentUploads)
+                .HasForeignKey(d => d.DealerId)
+                .OnDelete(DeleteBehavior.Restrict); // prevent cascade
+
+            modelBuilder.Entity<DocumentUpload>()
+                .HasOne(d => d.BorrowerDetails)
+                .WithMany(b => b.DocumentUploads)
+                .HasForeignKey(d => d.BorrowerDetailsId)
+                .OnDelete(DeleteBehavior.Restrict); // prevent cascade
+
+            modelBuilder.Entity<DocumentUpload>()
+                .HasOne(d => d.GuarantorDetails)
+                .WithMany(g => g.DocumentUploads)
+                .HasForeignKey(d => d.GuarantorDetailsId)
+                .OnDelete(DeleteBehavior.Restrict); // prevent cascade
+
+
+
 
             modelBuilder.Entity<Loan>()
                 .HasOne(l => l.Dealer)

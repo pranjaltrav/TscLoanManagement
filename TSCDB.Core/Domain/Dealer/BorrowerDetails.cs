@@ -17,5 +17,6 @@
         public string AttachmentPath { get; set; }
 
         public virtual Dealer Dealer { get; set; }
+        public virtual ICollection<DocumentUpload> DocumentUploads { get; set; }
     }
 }

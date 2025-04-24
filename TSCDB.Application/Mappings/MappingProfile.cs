@@ -31,6 +31,9 @@ namespace TscLoanManagement.TSCDB.Application.Mappings
             CreateMap<GuarantorDetails, GuarantorDetailsDto>().ReverseMap();
             CreateMap<ChequeDetails, ChequeDetailsDto>().ReverseMap();
             CreateMap<SecurityDepositDetails, SecurityDepositDetailsDto>().ReverseMap();
+            CreateMap<DocumentUpload, DocumentUploadDto>().ReverseMap();
+
+
 
 
             // Loan Mappings
