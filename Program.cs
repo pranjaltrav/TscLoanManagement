@@ -67,6 +67,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IDealerRepository, DealerRepository>();
 builder.Services.AddScoped<IDealerDetailsService, DealerDetailsService>();
+builder.Services.AddScoped<IDocumentUploadService, DocumentUploadService>();
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
 
 builder.Services.AddScoped<IDealerService, DealerService>();
