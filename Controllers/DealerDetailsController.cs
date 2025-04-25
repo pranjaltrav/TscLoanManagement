@@ -43,5 +43,16 @@ namespace TscLoanManagement.Controllers
             var result = await _dealerDetailsService.SubmitSecurityDepositDetailsAsync(dto);
             return Ok(result);
         }
+
+        [HttpPost("full-details")]
+        public async Task<IActionResult> SubmitFullDealerDetails([FromBody] DealerFullDetailsDto dto)
+        {
+            var response = await _dealerDetailsService.SubmitFullDealerDetailsAsync(dto);
+            if (!response.Success)
+                return StatusCode(500, response);
+
+            return Ok(response);
+        }
+
     }
 }

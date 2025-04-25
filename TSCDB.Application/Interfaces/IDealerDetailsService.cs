@@ -1,4 +1,5 @@
 ﻿using TscLoanManagement.TSCDB.Application.DTOs;
+using TscLoanManagement.TSCDB.Application.Wrappers;
 
 namespace TscLoanManagement.TSCDB.Application.Interfaces
 {
@@ -8,5 +9,7 @@ namespace TscLoanManagement.TSCDB.Application.Interfaces
         Task<GuarantorDetailsDto> SubmitGuarantorDetailsAsync(GuarantorDetailsDto dto);
         Task<ChequeDetailsDto> SubmitChequeDetailsAsync(ChequeDetailsDto dto);
         Task<SecurityDepositDetailsDto> SubmitSecurityDepositDetailsAsync(SecurityDepositDetailsDto dto);
+        Task<ApiResponse<string>> SubmitFullDealerDetailsAsync(DealerFullDetailsDto dto);
+
     }
 }
