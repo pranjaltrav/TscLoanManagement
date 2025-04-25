@@ -60,13 +60,21 @@ namespace TscLoanManagement.TSCDB.Application.Features.Dealers
         {
             try
             {
-                var borrower = _mapper.Map<BorrowerDetails>(dto.BorrowerDetails);
-                var guarantor = _mapper.Map<GuarantorDetails>(dto.GuarantorDetails);
+                var borrowerEntities = _mapper.Map<List<BorrowerDetails>>(dto.BorrowerDetails);
+                var guarantorEntities = _mapper.Map<List<GuarantorDetails>>(dto.GuarantorDetails);
                 var cheque = _mapper.Map<ChequeDetails>(dto.ChequeDetails);
                 var security = _mapper.Map<SecurityDepositDetails>(dto.SecurityDepositDetails);
 
-                await _borrowerRepo.AddAsync(borrower);
-                await _guarantorRepo.AddAsync(guarantor);
+                foreach (var borrower in borrowerEntities)
+                {
+                    await _borrowerRepo.AddAsync(borrower);
+                }
+
+                foreach (var guarantor in guarantorEntities)
+                {
+                    await _guarantorRepo.AddAsync(guarantor);
+                }
+
                 await _chequeRepo.AddAsync(cheque);
                 await _securityRepo.AddAsync(security);
 
@@ -77,6 +85,7 @@ namespace TscLoanManagement.TSCDB.Application.Features.Dealers
                 return new ApiResponse<string> { Success = false, Message = $"Error: {ex.Message}" };
             }
         }
+
 
     }
 }

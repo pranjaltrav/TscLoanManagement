@@ -2,8 +2,8 @@
 {
     public class DealerFullDetailsDto
     {
-        public BorrowerDetailsDto BorrowerDetails { get; set; }
-        public GuarantorDetailsDto GuarantorDetails { get; set; }
+        public List<BorrowerDetailsDto> BorrowerDetails { get; set; }
+        public List<GuarantorDetailsDto> GuarantorDetails { get; set; }
         public ChequeDetailsDto ChequeDetails { get; set; }
         public SecurityDepositDetailsDto SecurityDepositDetails { get; set; }
     }

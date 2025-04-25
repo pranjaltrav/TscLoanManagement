@@ -36,6 +36,7 @@ namespace TscLoanManagement.TSCDB.Application.Mappings
 
 
 
+
             // Loan Mappings
             CreateMap<LoanDto, Loan>()
                 .ForMember(dest => dest.Attachments, opt => opt.Ignore())
