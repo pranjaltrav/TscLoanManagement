@@ -60,50 +60,23 @@ namespace TscLoanManagement.TSCDB.Application.Features.Dealers
         {
             try
             {
-                if (dto.BorrowerDetails != null && dto.BorrowerDetails.Any())
-                {
-                    foreach (var borrowerDto in dto.BorrowerDetails)
-                    {
-                        var borrower = _mapper.Map<BorrowerDetails>(borrowerDto);
-                        await _borrowerRepo.AddAsync(borrower);
-                    }
-                }
+                var borrower = _mapper.Map<BorrowerDetails>(dto.BorrowerDetails);
+                var guarantor = _mapper.Map<GuarantorDetails>(dto.GuarantorDetails);
+                var cheque = _mapper.Map<ChequeDetails>(dto.ChequeDetails);
+                var security = _mapper.Map<SecurityDepositDetails>(dto.SecurityDepositDetails);
 
-                if (dto.GuarantorDetails != null && dto.GuarantorDetails.Any())
-                {
-                    foreach (var guarantorDto in dto.GuarantorDetails)
-                    {
-                        var guarantor = _mapper.Map<GuarantorDetails>(guarantorDto);
-                        await _guarantorRepo.AddAsync(guarantor);
-                    }
-                }
+                await _borrowerRepo.AddAsync(borrower);
+                await _guarantorRepo.AddAsync(guarantor);
+                await _chequeRepo.AddAsync(cheque);
+                await _securityRepo.AddAsync(security);
 
-                if (dto.ChequeDetails != null && dto.ChequeDetails.Any())
-                {
-                    foreach (var chequeDto in dto.ChequeDetails)
-                    {
-                        var cheque = _mapper.Map<ChequeDetails>(chequeDto);
-                        await _chequeRepo.AddAsync(cheque);
-                    }
-                }
-
-                if (dto.SecurityDepositDetails != null && dto.SecurityDepositDetails.Any())
-                {
-                    foreach (var securityDto in dto.SecurityDepositDetails)
-                    {
-                        var security = _mapper.Map<SecurityDepositDetails>(securityDto);
-                        await _securityRepo.AddAsync(security);
-                    }
-                }
-
-                return new ApiResponse<string>("Dealer details saved successfully.");
+                return new ApiResponse<string> { Success = true, Message = "Dealer details saved successfully." };
             }
             catch (Exception ex)
             {
-                return new ApiResponse<string>($"Error: {ex.Message}", false);
+                return new ApiResponse<string> { Success = false, Message = $"Error: {ex.Message}" };
             }
         }
-
 
     }
 }
