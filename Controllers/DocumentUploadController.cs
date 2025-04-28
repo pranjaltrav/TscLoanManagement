@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using TscLoanManagement.TSCDB.Application.DTOs;
 using TscLoanManagement.TSCDB.Application.Interfaces;
+using TscLoanManagement.TSCDB.Core.Interfaces.Repositories;
+using TscLoanManagement.TSCDB.Infrastructure.Repositories;
 
 namespace TscLoanManagement.Controllers
 {
@@ -10,10 +12,12 @@ namespace TscLoanManagement.Controllers
     public class DocumentUploadController : ControllerBase
     {
         private readonly IDocumentUploadService _documentService;
+        private readonly IDealerRepository _dealerRepository;
 
-        public DocumentUploadController(IDocumentUploadService documentService)
+        public DocumentUploadController(IDocumentUploadService documentService, IDealerRepository dealerRepository)
         {
             _documentService = documentService;
+            _dealerRepository = dealerRepository;
         }
 
         [HttpPost("upload")]
@@ -98,6 +102,11 @@ namespace TscLoanManagement.Controllers
             if (files.Count != documentTypes.Count)
                 return BadRequest("Mismatch between files and document types.");
 
+            // Fetch Dealer with related Borrower and Guarantor
+            var dealer = await _dealerRepository.GetDealerByUserIdAsync(dealerId);
+            if (dealer == null)
+                return NotFound("Dealer not found.");
+
             var uploadedDocuments = new List<DocumentUploadDto>();
 
             for (int i = 0; i < files.Count; i++)
@@ -115,12 +124,46 @@ namespace TscLoanManagement.Controllers
                     //UploadedOn = DateTime.UtcNow
                 };
 
+                // ➡️ Now set BorrowerId or GuarantorId if needed based on DocumentType
+                if (IsBorrowerDocument(documentType) && dealer.BorrowerDetails?.Any() == true)
+                {
+                    dto.BorrowerDetailsId = dealer.BorrowerDetails.FirstOrDefault().Id;
+                }
+                else if (IsGuarantorDocument(documentType) && dealer.GuarantorDetails?.Any() == true)
+                {
+                    dto.GuarantorDetailsId = dealer.GuarantorDetails.FirstOrDefault().Id;
+                }
+
                 var result = await _documentService.UploadDocumentAsync(dto);
                 uploadedDocuments.Add(result);
             }
 
             return Ok(uploadedDocuments);
         }
+
+
+        private bool IsBorrowerDocument(string documentType)
+{
+    var borrowerDocs = new List<string>
+    {
+        "Borrower Address proof",
+        "Borrower PAN",
+        "Borrower Aadhar Card"
+    };
+    return borrowerDocs.Contains(documentType);
+}
+
+private bool IsGuarantorDocument(string documentType)
+{
+    var guarantorDocs = new List<string>
+    {
+        "Guarantor PAN",
+        "Guarantor Address Proof",
+        "Guarantor Aadhar Card"
+    };
+    return guarantorDocs.Contains(documentType);
+}
+
 
 
 
