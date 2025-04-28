@@ -89,6 +89,40 @@ namespace TscLoanManagement.Controllers
             return Ok(documents);
         }
 
+        [HttpPost("upload-multiple")]
+        public async Task<IActionResult> UploadMultipleDocuments([FromForm] List<IFormFile> files, [FromForm] List<string> documentTypes, [FromForm] int dealerId)
+        {
+            if (files == null || files.Count == 0)
+                return BadRequest("No files uploaded.");
+
+            if (files.Count != documentTypes.Count)
+                return BadRequest("Mismatch between files and document types.");
+
+            var uploadedDocuments = new List<DocumentUploadDto>();
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                var file = files[i];
+                var documentType = documentTypes[i];
+
+                var filePath = await SaveFileAsync(file);
+
+                var dto = new DocumentUploadDto
+                {
+                    DealerId = dealerId,
+                    DocumentType = documentType,
+                    FilePath = filePath,
+                    //UploadedOn = DateTime.UtcNow
+                };
+
+                var result = await _documentService.UploadDocumentAsync(dto);
+                uploadedDocuments.Add(result);
+            }
+
+            return Ok(uploadedDocuments);
+        }
+
+
 
     }
 }
