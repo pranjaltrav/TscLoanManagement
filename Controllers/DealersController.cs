@@ -93,5 +93,14 @@ namespace TscLoanManagement.Controllers
             var createdDealer = await _dealerService.CreateDealerAsync(dealerDto);
             return CreatedAtAction(nameof(GetDealerById), new { id = createdDealer.Id }, createdDealer);
         }
+
+        [HttpPut("UpdateDealerStatus")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateDealerStatus([FromBody] UpdateDealerStatusDto dto)
+        {
+            var result = await _dealerService.UpdateDealerStatusAsync(dto);
+            return Ok(new { success = result, message = "Dealer status updated successfully." });
+        }
+
     }
 }

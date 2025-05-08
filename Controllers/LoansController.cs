@@ -26,6 +26,7 @@ namespace TscLoanManagement.Controllers
         }
 
         [HttpGet("dealer/{dealerId}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<LoanDto>>> GetLoansByDealerId(int dealerId)
         {
             var loans = await _loanService.GetLoansByDealerIdAsync(dealerId);

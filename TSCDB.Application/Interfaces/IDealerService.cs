@@ -9,5 +9,7 @@ namespace TscLoanManagement.TSCDB.Application.Interfaces
         Task<DealerDto> CreateDealerAsync(DealerDto dealerDto);
         Task UpdateDealerAsync(DealerDto dealerDto);
         Task DeleteDealerAsync(int id);
+        Task<bool> UpdateDealerStatusAsync(UpdateDealerStatusDto dto);
+
     }
 }

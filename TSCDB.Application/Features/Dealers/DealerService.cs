@@ -2,6 +2,7 @@
 using TscLoanManagement.TSCDB.Application.DTOs;
 using TscLoanManagement.TSCDB.Application.Interfaces;
 using TscLoanManagement.TSCDB.Core.Domain.Dealer;
+using TscLoanManagement.TSCDB.Core.Enums;
 using TscLoanManagement.TSCDB.Core.Interfaces.Repositories;
 
 namespace TscLoanManagement.TSCDB.Application.Features.Dealers
@@ -58,6 +59,31 @@ namespace TscLoanManagement.TSCDB.Application.Features.Dealers
             dealer.IsActive = false;
             await _dealerRepository.UpdateAsync(dealer);
         }
+
+        public async Task<bool> UpdateDealerStatusAsync(UpdateDealerStatusDto dto)
+        {
+            var dealer = await _dealerRepository.GetByIdAsync(dto.DealerId);
+            if (dealer == null)
+                throw new KeyNotFoundException("Dealer not found");
+
+            dealer.Status = dto.NewStatus;
+
+            if (dto.NewStatus == DealerStatus.Rejected)
+            {
+                if (string.IsNullOrEmpty(dto.RejectionReason))
+                    throw new ArgumentException("Rejection reason is required when status is Rejected");
+
+                dealer.RejectionReason = dto.RejectionReason;
+            }
+            else
+            {
+                dealer.RejectionReason = null; // Clear if not rejected
+            }
+
+            await _dealerRepository.UpdateAsync(dealer);
+            return true;
+        }
+
     }
 
 }

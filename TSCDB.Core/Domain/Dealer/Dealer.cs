@@ -1,5 +1,6 @@
 ﻿using TscLoanManagement.TSCDB.Core.Domain.Authentication;
 using TscLoanManagement.TSCDB.Core.Domain.Loan;
+using TscLoanManagement.TSCDB.Core.Enums;
 
 namespace TscLoanManagement.TSCDB.Core.Domain.Dealer
 {
@@ -10,7 +11,7 @@ namespace TscLoanManagement.TSCDB.Core.Domain.Dealer
         public string LoanProposalNo { get; set; }
         public string DealershipName { get; set; }
         public string DealershipPAN { get; set; }
-        public string Status { get; set; }
+        //public string Status { get; set; }
         public DateTime DateOfIncorporation { get; set; }
         public string Entity { get; set; }
         public string GSTNo { get; set; }
@@ -38,6 +39,10 @@ namespace TscLoanManagement.TSCDB.Core.Domain.Dealer
         public ICollection<SecurityDepositDetails> SecurityDepositDetails { get; set; }
 
         public virtual ICollection<DocumentUpload> DocumentUploads { get; set; }
+
+        public DealerStatus Status { get; set; }
+        public string? RejectionReason { get; set; } // Nullable
+
 
     }
 }
