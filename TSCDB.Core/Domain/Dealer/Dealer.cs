@@ -61,7 +61,7 @@ namespace TscLoanManagement.TSCDB.Core.Domain.Dealer
         public bool IsActive { get; set; }
 
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        //public ApplicationUser User { get; set; } // Need to enable according to new Master Update db through migration and fix apis according to new model and DTOs
 
         public virtual ICollection<TscLoanManagement.TSCDB.Core.Domain.Loan.Loan> Loans { get; set; }
         public ICollection<BorrowerDetails> BorrowerDetails { get; set; }
